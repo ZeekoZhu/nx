@@ -73,6 +73,22 @@ export class ExternalApi {
     this.router.navigate(`/projects/${encodeURIComponent(projectName)}`);
   }
 
+  toggleSelectProject(projectName: string) {
+    this._graphIsReady.then(() => {
+      const projectSelected = this._projectGraphService
+        .getSnapshot()
+        .context.projects.find((p) => p.name === projectName);
+      if (projectSelected) {
+        this._projectGraphService.send({ type: 'selectProject', projectName });
+      } else {
+        this._projectGraphService.send({
+          type: 'deselectProject',
+          projectName,
+        });
+      }
+    });
+  }
+
   selectAllProjects() {
     this.router.navigate(`/projects/all`);
   }
