@@ -77,7 +77,8 @@ export class ExternalApi {
     this._graphIsReady.then(() => {
       const projectSelected = this._projectGraphService
         .getSnapshot()
-        .context.projects.find((p) => p.name === projectName);
+        .context.selectedProjects.find((p) => p === projectName);
+      console.log(projectName, projectSelected);
       if (projectSelected) {
         this._projectGraphService.send({ type: 'selectProject', projectName });
       } else {
